@@ -29,24 +29,30 @@
     
 <link rel="canonical" href="./">
 
-<!-- Google Fonts: Orbitron + Exo 2 -->
+<!-- Оптимизация подключений -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+<!-- Google Fonts: Orbitron + Exo 2 - асинхронная загрузка -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;700&display=swap"></noscript>
 
     
 
 
   
     <script async="" src="./Welcome to Segway ,Your Premier Choice for Personal Transportation_files/gtm.js"></script><script src="./Welcome to Segway ,Your Premier Choice for Personal Transportation_files/jquery.1fc733054ddb2e2fcd4a0f763671047b.js"></script>
-<script src="./Welcome to Segway ,Your Premier Choice for Personal Transportation_files/utils.15b6fc27cccbddb5fb7b88a7c6a2c7e4.js"></script>
+<script defer src="./Welcome to Segway ,Your Premier Choice for Personal Transportation_files/utils.15b6fc27cccbddb5fb7b88a7c6a2c7e4.js"></script>
 
 
   
     <link rel="stylesheet" href="./Welcome to Segway ,Your Premier Choice for Personal Transportation_files/clientlib-base.3e21fb49801385d0ff2bda0061858216.css" type="text/css">
 <script src="./Welcome to Segway ,Your Premier Choice for Personal Transportation_files/clientlib-vendors.af8a67a35a3d1f9665c662b14715869d.js"></script>
 <script src="./Welcome to Segway ,Your Premier Choice for Personal Transportation_files/container.027d01df25f17066242db969c9bf2ade.js"></script>
-<script src="./Welcome to Segway ,Your Premier Choice for Personal Transportation_files/imageDynamicMedia.92ccbc1f0bd61a42e65323ae10f99536.js"></script>
+<script defer src="./Welcome to Segway ,Your Premier Choice for Personal Transportation_files/imageDynamicMedia.92ccbc1f0bd61a42e65323ae10f99536.js"></script>
 <!-- Отключен CSRF скрипт так как токен недоступен локально -->
 <!-- <script src="./Welcome to Segway ,Your Premier Choice for Personal Transportation_files/csrf.a9dcac4698709ca8e1cbc88363cf0793.js"></script> -->
 <script src="./Welcome to Segway ,Your Premier Choice for Personal Transportation_files/clientlib-base.30c83cb63e47404cfb20b9f8f03ef7b6.js"></script>
@@ -2071,5 +2077,51 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 </main>
+
+<!-- Безопасные оптимизации производительности -->
+<script>
+// Lazy loading для изображений (НЕ в каруселях!)
+document.addEventListener('DOMContentLoaded', function() {
+    // Добавляем loading="lazy" только к изображениям вне каруселей
+    const images = document.querySelectorAll('img');
+    images.forEach(img => {
+        // Проверяем что изображение НЕ в карусели/свайпере
+        if (!img.closest('.swiper-slide') && 
+            !img.closest('.home-primary-banner') && 
+            !img.closest('.home-brand-module-swiper')) {
+            img.loading = 'lazy';
+        }
+    });
+    
+    // Оптимизация производительности анимаций
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (prefersReducedMotion.matches) {
+        document.documentElement.style.setProperty('--animation-duration', '0.01s');
+    }
+});
+
+// Service Worker для кеширования (опционально)
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .catch(error => console.log('Service Worker не поддерживается:', error));
+    });
+}
+
+// Предзагрузка критических ресурсов
+const preloadLinks = [
+    { href: './Welcome to Segway ,Your Premier Choice for Personal Transportation_files/clientlib-base.3e21fb49801385d0ff2bda0061858216.css', as: 'style' },
+    { href: './Welcome to Segway ,Your Premier Choice for Personal Transportation_files/jquery.1fc733054ddb2e2fcd4a0f763671047b.js', as: 'script' }
+];
+
+preloadLinks.forEach(link => {
+    const el = document.createElement('link');
+    el.rel = 'preload';
+    el.href = link.href;
+    el.as = link.as;
+    document.head.appendChild(el);
+});
+</script>
+
 </body>
 </html>

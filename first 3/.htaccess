@@ -116,7 +116,7 @@
     </IfModule>
 </IfModule>
 
-# Безопасность
+# Безопасность и производительность
 <IfModule mod_headers.c>
     # Защита от XSS
     Header set X-XSS-Protection "1; mode=block"
@@ -126,4 +126,30 @@
     
     # Защита от MIME type sniffing
     Header set X-Content-Type-Options "nosniff"
+    
+    # Включаем Service Worker
+    Header set Service-Worker-Allowed "/"
+    
+    # Улучшение производительности
+    Header set Connection "Keep-Alive"
+    Header set Keep-Alive "timeout=5, max=100"
+</IfModule>
+
+# Включаем Brotli сжатие если доступно
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css
+    AddOutputFilterByType BROTLI_COMPRESS application/x-javascript application/javascript
+    AddOutputFilterByType BROTLI_COMPRESS application/rss+xml application/xml
+    AddOutputFilterByType BROTLI_COMPRESS application/json
+    BrotliCompressionLevel 11
+</IfModule>
+
+# Отключаем ETags для статических файлов
+FileETag None
+
+# Оптимизация для мобильных устройств
+<IfModule mod_mime.c>
+    AddType image/webp .webp
+    AddType video/mp4 .mp4
+    AddType video/webm .webm
 </IfModule>
