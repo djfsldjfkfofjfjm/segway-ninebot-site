@@ -1,0 +1,36 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Build files
+node_modules/
+dist/
+build/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Large media files (если нужно)
+# *.mp4
+# *.mov
+# *.avi
+
+# Большие видео файлы (теперь сжаты и помещаются в GitHub)
+# local_assets/is/content/ninebotstage/CompanyVideo_US_PC.mp4
+# local_assets/is/content/ninebotstage/CompanyVideo_US_M.mp4
+# macOS system files
+.DS_Store
+**/.DS_Store
